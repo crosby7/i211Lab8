@@ -13,7 +13,6 @@ require_once ("vendor/autoload.php");
 //create an object of UserController
 $user_controller = new UserController();
 
-//add your code below this line to complete this file
 //default action is to list all toys
 $action = $_GET['action'] ?? 'index';
 
