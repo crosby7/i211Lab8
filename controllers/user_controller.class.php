@@ -13,7 +13,7 @@ class UserController {
         //create an object of UserModel class
         $this->user_model = new UserModel();
     }
-
+    //display index page
     public function index()
     {
         //create an object of the ToyView class
@@ -21,26 +21,29 @@ class UserController {
         //display the registration form
         $view->display("placeholder");
     }
-
+     //register user to database
     public function register()
     {
         $user = $this->user_model->add_user();
 
         if (!$user) {
-            $message = "An error occured and user could not be added.";
+            $message = "An error occurred and user could not be added.";
             $view = new UserError();
             $view->display($message);
             return;
         }
-
+        //display register message
         $view = new Register();
         $view->display();
     }
+    //display login page form
     public function login()
     {
+        //display login form
         $view = new Login();
         $view->display();
     }
+    //verify user credentials to properly login
     public function verify()
     {
         $verify = $this->user_model->verify_user();
@@ -50,12 +53,14 @@ class UserController {
             $view->display($message);
             return;
         }
-
+        //display successful login
         $view = new VerifyUser();
         $view->display();
     }
+    //logout user
     public function logout()
     {
+        //
         $logout = $this->user_model->logout();
         if (!$logout) {
             $message = "An error has prevented you from logging out.";
@@ -63,10 +68,11 @@ class UserController {
             $view->display($message);
             return;
         }
-
+         //display logout success
         $view = new Logout();
         $view->display();
     }
+    //display the reset password form
     public function reset()
     {
         //check to see if user is logged in
@@ -76,9 +82,11 @@ class UserController {
             $view->display($message);
             return;
         }
+        //display password reset form
         $view = new Reset();
         $view->display();
     }
+    //actually reset the password in the database
     public function do_reset()
     {
         $reset = $this->user_model->reset_password();
@@ -89,10 +97,12 @@ class UserController {
             return;
 
         }
+        //display successful password change
         $view = new ResetConfirm();
         $view->display();
 
     }
+    //create error message
     public function error($message)
     {
         //create an object of the Error class
