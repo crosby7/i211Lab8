@@ -1,7 +1,7 @@
 <?php
 
-/* Author: Louie Zhu
- * Date: 03/09/2024
+/* Author: Cameron Crosby
+ * Date: 11/12/2024
  * Name: database.class.php
  * Description: the Database class sets the database details.
  */
