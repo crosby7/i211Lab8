@@ -32,6 +32,18 @@ class UserModel
         }
     }
 
+    // Public function to get model instance
+    public static function getUserModel(): UserModel {
+        // If a user model does not exist, create it
+        if (self::$_instance === null)
+        {
+            self::$_instance = new UserModel();
+        }
+
+        // Return the instance
+        return self::$_instance;
+    }
+
     // Method add_user: allows a user to be added to the database -- password must be hashed
     public function add_user(): bool {
         // First, check if $_POST is set. Otherwise, display an error.

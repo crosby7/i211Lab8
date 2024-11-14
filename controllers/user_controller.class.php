@@ -11,10 +11,10 @@ class UserController {
 
     public function __construct(){
         //create an object of UserModel class
-        $this->user_model = new UserModel();
+        $this->user_model = UserModel::getUserModel();
     }
     //display index page
-    public function index()
+    public function index(): void
     {
         //create an object of the ToyView class
         $view = new Index();
@@ -22,7 +22,7 @@ class UserController {
         $view->display("placeholder");
     }
      //register user to database
-    public function register()
+    public function register(): void
     {
         $user = $this->user_model->add_user();
 
@@ -37,14 +37,14 @@ class UserController {
         $view->display();
     }
     //display login page form
-    public function login()
+    public function login(): void
     {
         //display login form
         $view = new Login();
         $view->display();
     }
     //verify user credentials to properly login
-    public function verify()
+    public function verify(): void
     {
         $verify = $this->user_model->verify_user();
         if (!$verify) {
@@ -58,7 +58,7 @@ class UserController {
         $view->display();
     }
     //logout user
-    public function logout()
+    public function logout(): void
     {
         //
         $logout = $this->user_model->logout();
@@ -73,7 +73,7 @@ class UserController {
         $view->display();
     }
     //display the reset password form
-    public function reset()
+    public function reset(): void
     {
         //check to see if user is logged in
         if (!isset($_SESSION['username'])) {
@@ -87,7 +87,7 @@ class UserController {
         $view->display();
     }
     //actually reset the password in the database
-    public function do_reset()
+    public function do_reset(): void
     {
         $reset = $this->user_model->reset_password();
         if (!$reset) {
@@ -103,7 +103,7 @@ class UserController {
 
     }
     //create error message
-    public function error($message)
+    public function error($message): void
     {
         //create an object of the Error class
         $error = new UserError();
