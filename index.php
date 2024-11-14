@@ -12,5 +12,17 @@ require_once ("vendor/autoload.php");
 
 //create an object of UserController
 $user_controller = new UserController();
+?>
 
 //add your code below this line to complete this file
+<?php
+if(isset($_POST['action'])){
+    if($_POST['action'] == 'register'){
+        $user_controller->adduser();
+    }
+}
+
+
+
+
+?>
