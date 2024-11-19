@@ -1,23 +1,45 @@
 <?php
-class VerifyUser {
+
+/*
+ * Author: Millie Jones
+ * Date: 11/14/24
+ * Name: index.class.php
+ * Description: This class extends the View class. The "display" method displays the message if log in was successful or not
+ *				To create the page header and footer, the display method calls the header and footer
+ *				methods defined in the parent class.
+ */
+class VerifyUser extends View{
+    //function to display log in message
     public function display(bool$condition){
+            $this->header();
             if($condition == true){
-                echo '<div class="top-row">Login</div>';
-                echo '<div class="middle-row">
-            <p>You have successfully logged in.</p>
-        </div>';
-                echo '<div class="bottom-row">
+                //if log in was successful
+                ?>
+
+                <div class="top-row">Login</div>
+                <div class="middle-row">
+                    <p>You have successfully logged in.</p>
+                </div>
+                <div class="bottom-row">
             <span style="float: left">
-                Want to log out? <a href="index.php?action=logout">Logout</a>            </span>
-            <span style="float: right">Reset password? <a href="index.php?action=reset">Reset</a></span>
-        </div>';}
+                Want to log out? <a href="<?=BASE_URL?>/index.php?action=logout">Logout</a>            </span>
+                    <span style="float: right">Reset password? <a href="<?=BASE_URL?>/index.php?action=reset">Reset</a></span>
+                </div>
+<?php
+}
+            //if log in failed
                 else{
-                    echo '<div class="top-row">Login</div>';
-                    echo '<div class="middle-row">
+                    ?>
+                    <div class="top-row">Login</div>
+                    <div class="middle-row">
             <p>Your last attempt to login failed. Please try again.</p>
-        </div>';
-                    echo '<div class="bottom-row">
+        </div>
+                 <div class="bottom-row">
             <span style="float: left">
-                Already have an account? <a href="index.php?action=login">Login</a>            </span>
-            <span style="float: right">Reset password? <a href="index.php?action=reset">Reset</a></span>
-        </div>';}}}
+                Already have an account? <a href="<?=BASE_URL?>/index.php?action=login">Login</a>            </span>
+            <span style="float: right">Reset password? <a href="<?=BASE_URL?>/index.php?action=reset">Reset</a></span>
+        </div>
+<?php
+                    //display footer
+                    $this->footer();
+                }}}

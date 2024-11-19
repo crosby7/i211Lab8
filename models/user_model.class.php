@@ -47,28 +47,23 @@ class UserModel
     // Method add_user: allows a user to be added to the database -- password must be hashed
     public function add_user(): bool {
         // First, check if $_POST is set. Otherwise, display an error.
-        if (!isset($_POST['registration']))
+        if (!isset($_POST['username']))
         {
             $message = "Error: there was no registration submitted.";
-            $view = new UserError();
-            $view->display($message);
-            return false;
+            header("Location: index.php?action=error&msg=$message");
+            exit();
         }
 
         // Get user registration info -- From the instructions, it will be set with POST
-        // This is an array with username, password, email, and first/last name
-        $registrationInfo = $_POST['registration'];
-
-        // Unpack array for easier sql
-        $userName = $registrationInfo['username'];
-        $password = password_hash($registrationInfo['password'], PASSWORD_DEFAULT);
-        $email = $registrationInfo['email'];
-        $firstName = $registrationInfo['firstname'];
-        $lastName = $registrationInfo['lastname'];
+        $userName = htmlspecialchars($_POST['username']);
+        $password = password_hash(htmlspecialchars($_POST['password']), PASSWORD_DEFAULT);
+        $email = htmlspecialchars($_POST['email']);
+        $firstName = htmlspecialchars($_POST['fname']);
+        $lastName = htmlspecialchars($_POST['lname']);
 
         // Create sql statement to add user
-        $sql = "INSERT INTO users (username, password, email, firstname, lastname)
-            VALUES ($userName, $password, $email, $firstName, $lastName)";
+        $sql = "INSERT INTO users (username,password,email,firstname,lastname)";
+        $sql .= "VALUES ('$userName', '$password','$email','$firstName','$lastName')";
 
         // Execute sql
         $query = $this->dbConnection->query($sql);
@@ -101,7 +96,7 @@ class UserModel
         $password = $_POST['password'];
 
         // Create sql statement
-        $sql = "SELECT (username, password) FROM users WHERE username = $username";
+        $sql = "SELECT username, password FROM users WHERE username = '$username'";
 
         // Execute the query
         $query = $this->dbConnection->query($sql);
@@ -152,8 +147,11 @@ class UserModel
     public function logout(): bool {
         // Destroy user session cookies and return true
 
-        // Question: do we want to kill the session? No?
+        // Question: do we want to kill the session?
         $_SESSION = array();
+        setcookie (session_id(), "", time() - 3600);
+        session_destroy();
+        session_write_close();
 
         if (!isset($_SESSION['username']))
         {
@@ -183,28 +181,12 @@ class UserModel
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
         // SQL statement to update password for that user
-        $sql = "UPDATE users SET password = $password WHERE username = $username";
+        $sql = "UPDATE users SET password = '$password' WHERE username = '$username'";
 
         // Execute the query
         $query = $this->dbConnection->query($sql);
 
-        // Handle query failure
-        if (!$query)
-        {
-            $message = "Error: database update failed.";
-            $view = new UserError();
-            $view->display($message);
-            return false;
-        }
-
-        if ($query->num_rows == 0) {
-            $message = "Error: no user was updated.";
-            $view = new UserError();
-            $view->display($message);
-            return false;
-        }
-        else {
-            return true;
-        }
+        // Query will return a bool since it is an update
+        return $query;
     }
 }

@@ -7,6 +7,16 @@
  * Description: short description about this file
  */
 
+// Start session if there isnt one
+if (session_status() === PHP_SESSION_NONE)
+{
+    // start a session
+    session_start();
+}
+
+// Config
+require_once ('application/config.php');
+
 //include code in vendor/autoload.php file
 require_once ("vendor/autoload.php");
 

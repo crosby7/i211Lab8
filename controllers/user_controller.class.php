@@ -16,10 +16,10 @@ class UserController {
     //display index page
     public function index(): void
     {
-        //create an object of the ToyView class
+        //create an object of the Index class
         $view = new Index();
         //display the registration form
-        $view->display("placeholder");
+        $view->display();
     }
      //register user to database
     public function register(): void
@@ -34,7 +34,7 @@ class UserController {
         }
         //display register message
         $view = new Register();
-        $view->display();
+        $view->display($user);
     }
     //display login page form
     public function login(): void
@@ -55,7 +55,7 @@ class UserController {
         }
         //display successful login
         $view = new VerifyUser();
-        $view->display();
+        $view->display($verify);
     }
     //logout user
     public function logout(): void
@@ -99,7 +99,7 @@ class UserController {
         }
         //display successful password change
         $view = new ResetConfirm();
-        $view->display();
+        $view->display($reset);
 
     }
     //create error message
